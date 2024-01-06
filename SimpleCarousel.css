@@ -1,0 +1,25 @@
+.slider_outer{
+	overflow-x: hidden;
+}
+.slider{
+	display: flex;
+}
+.slider_transforming{
+	transition: transform 0.5s;
+}
+.slider_markers{
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+.marker{
+	box-sizing: border-box;
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 1px solid blue;
+	cursor: pointer;
+}
+.active_marker{
+	background-color: blue;
+}
