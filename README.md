@@ -1,10 +1,10 @@
-#SimpleCarousel
+# SimpleCarousel
 
 
-####Simple carousel - Pure JS module that will help you add easy customizable carousel on your website
+#### Simple carousel - Pure JS module that will help you add easy customizable carousel on your website
 
 
-###Usage
+### Usage
 
 
 Include SimpleCarousel style in `<head>`:
@@ -28,7 +28,7 @@ new SimpleCarousel(slider, options).start();
 `.start()` *(required for working)* - starts controls listening
 
 
-####Options
+#### Options
 
 
 `shownSlides`*(optional: default - 1)* - number of slides shown at the same time
@@ -37,10 +37,10 @@ new SimpleCarousel(slider, options).start();
 `swipeable` *(optional: default - true)* - whether slider is swiipeable
 `infinite` *(optional: default - false)* - whether slider is infinite
 `markers` *(optional)* - markers DOM element
-###Example
+### Example
 
 
-####HTML:
+#### HTML:
 
 
 ```html
@@ -58,7 +58,7 @@ new SimpleCarousel(slider, options).start();
 </div>
 <div class="markers"></div>
 ```
-####JavaScript
+#### JavaScript
 
 
 ```javascript
@@ -72,4 +72,4 @@ new SimpleCarousel(document.getElementById('slider'), {
 	markers: document.querySelector('.markers'),
 }).start();
 ```
-#####Feel free to customize slider CSS!
+##### Feel free to customize slider CSS!
