@@ -20,15 +20,15 @@ import SimpleCarousel from '/SimpleCarousel.js';
 ```javascript
 new SimpleCarousel(slider, options).start();
 ```
-`slider`*(required)* - slider DOM element
+`slider` *(required)* - slider DOM element
 
-`options`*(optional)* - options object
+`options` *(optional)* - options object
 
 `.start()` *(required for working)* - starts controls listening
 
 #### Options
 
-`shownSlides`*(optional: default - 1)* - number of slides shown at the same time
+`shownSlides` *(optional: default - 1)* - number of slides shown at the same time
 
 `arrowLeft` *(optional)* - switch to the previous slide DOM element
 
