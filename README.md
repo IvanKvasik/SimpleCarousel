@@ -6,7 +6,7 @@
 
 Include SimpleCarousel style in `<head>`:
 ```html
-<link rel="stylesheet" href = "SimpleCarousel.css">
+<link rel="stylesheet" href="SimpleCarousel.css">
 ```
 Include your script as a module in the end of `<body>`:
 ```html
@@ -59,7 +59,7 @@ new SimpleCarousel(slider, options).start();
 </div>
 <div class="markers"></div>
 ```
-#### JavaScript
+#### JavaScript:
 
 ```javascript
 import SimpleCarousel from '/SimpleCarousel.js';
