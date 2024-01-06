@@ -72,4 +72,3 @@ new SimpleCarousel(document.getElementById('slider'), {
 	markers: document.querySelector('.markers'),
 }).start();
 ```
-##### Feel free to customize slider CSS!
