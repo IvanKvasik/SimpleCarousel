@@ -34,7 +34,7 @@ new SimpleCarousel(slider, options).start();
 
 `arrowRight` *(optional)* - switch to the next slide DOM element
 
-`swipeable` *(optional: default - true)* - whether slider is swiipeable
+`swipeable` *(optional: default - true)* - whether slider is swipeable
 
 `infinite` *(optional: default - false)* - whether slider is infinite
 
