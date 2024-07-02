@@ -28,6 +28,8 @@ new SimpleCarousel(slider, options).start();
 
 #### Options
 
+`outerClasses` *(optional)* - array of additional classes for outer block
+
 `shownSlides` *(optional: default - 1)* - number of slides shown at the same time
 
 `arrowLeft` *(optional)* - switch to the previous slide DOM element
@@ -64,6 +66,7 @@ new SimpleCarousel(slider, options).start();
 ```javascript
 import SimpleCarousel from '/SimpleCarousel.js';
 new SimpleCarousel(document.getElementById('slider'), {
+	outerClasses: ['class1', 'class2'],
 	shownSlides: 3,
 	arrowLeft: document.getElementById('left'),
 	arrowRight: document.getElementById('right'),
