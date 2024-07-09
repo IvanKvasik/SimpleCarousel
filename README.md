@@ -40,7 +40,7 @@ new SimpleCarousel(slider, options).start();
 
 `infinite` *(optional: default - false)* - whether slider is infinite
 
-`speed` *(optional: default - 15)* - swipe speed
+`speed` *(optional: default - 1.5)* - slide changing's speed
 
 `markers` *(optional)* - markers DOM element
 

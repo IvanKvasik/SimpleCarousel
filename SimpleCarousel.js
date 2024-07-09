@@ -8,7 +8,7 @@ export default class SimpleCarousel{
 		this._options.shownSlides = this._options.shownSlides ? this._options.shownSlides : 1;
 		this._options.swipeable = typeof this._options.swipeable !== "undefined" ? this._options.swipeable : true;
 		this._options.infinite = typeof this._options.infinite !== "undefined" ? this._options.infinite : false;
-		this._options.speed = typeof this._options.speed !== "undefined" ? this._options.speed : 15;
+		this._options.speed = typeof this._options.speed !== "undefined" ? this._options.speed : 1.5;
 		this._currentSlide = 0;
 		this._slidesNumber = this._slider.children.length;
 		this._slideWidth = 100/this._options.shownSlides;
@@ -44,7 +44,7 @@ export default class SimpleCarousel{
 	}
 
 	_animateTransform(end){
- 		let progress = this._getTranslateX();
+ 		let progress = this._getTranslateX() * 100 / window.innerWidth;
 		let change = end > progress ? this._options.speed : -this._options.speed;
 
 		let loop = () => {
@@ -53,7 +53,7 @@ export default class SimpleCarousel{
 			}else{
 				progress += Math.max(change, end - progress);
 			}
-			this._slider.style.transform = `translateX(${progress}px)`;
+			this._slider.style.transform = `translateX(${progress}%)`;
 			if(progress != end) window.requestAnimationFrame(loop);
 		}
 		window.requestAnimationFrame(loop);
@@ -88,8 +88,7 @@ export default class SimpleCarousel{
 			/*if(!this._slider.classList.contains('slider_transforming')){
 				this._slider.classList.add('slider_transforming');
 			}*/
-			let end = (this._currentSlide * this._slideWidth) * window.innerWidth / 100;
-			this._animateTransform(end); //move to the next slide
+			this._animateTransform(this._currentSlide * this._slideWidth); //move to the next slide
 		});
 		//change active marker
 		if(this._options.markers){
