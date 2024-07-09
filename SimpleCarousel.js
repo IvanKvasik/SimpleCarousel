@@ -63,7 +63,6 @@ export default class SimpleCarousel{
 		if(direction == 'right'){
 			//next slide does not exist and ifinite slider
 			if(-this._currentSlide == this._slidesNumber - this._options.shownSlides && this._options.infinite){
-				//this._slider.classList.remove('slider_transforming');
 				this._slider.append(this._slider.firstElementChild.cloneNode(true));
 				this._slider.removeChild(this._slider.firstElementChild);
 
@@ -74,7 +73,6 @@ export default class SimpleCarousel{
 			}
 		}else if(direction == 'left'){
 			if(!this._currentSlide && this._options.infinite){ //previous slide does not exist and ifinite slider
-				//this._slider.classList.remove('slider_transforming');
 				this._slider.prepend(this._slider.lastElementChild.cloneNode(true));
 				this._slider.removeChild(this._slider.lastElementChild);
 					
@@ -85,9 +83,6 @@ export default class SimpleCarousel{
 			}
 		}
 		setTimeout(() => {
-			/*if(!this._slider.classList.contains('slider_transforming')){
-				this._slider.classList.add('slider_transforming');
-			}*/
 			this._animateTransform(this._currentSlide * this._slideWidth); //move to the next slide
 		});
 		//change active marker
