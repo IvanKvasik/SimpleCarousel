@@ -45,7 +45,7 @@ export default class SimpleCarousel{
 	}
 
 	_animateTransform(end){
- 		let progress = this._getTranslateX() * 100 / window.innerWidth;
+ 		let progress = this._getTranslateX() * 100 / this._slider.parentNode.clientWidth;
 		let change = end > progress ? this._options.speed : -this._options.speed;
 
 		let loop = () => {
@@ -83,9 +83,9 @@ export default class SimpleCarousel{
 				this._currentSlide++;
 			}
 		}
-		setTimeout(() => {
+		//setTimeout(() => {
 			this._animateTransform(this._currentSlide * this._slideWidth); //move to the next slide
-		});
+		//});
 		//change active marker
 		if(this._options.markers){
 			this._options.markers.querySelector('.active_marker').classList.remove('active_marker');
