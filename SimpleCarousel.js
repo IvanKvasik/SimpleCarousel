@@ -4,7 +4,6 @@ export default class SimpleCarousel{
 		this._slider = slider;
 		this._slider.classList.add('slider');
 		this._options = options;
-		this._options.outerClasses = this._options.outerClasses !== "undefined" ? this._options.outerClasses : [];
 		this._options.shownSlides = this._options.shownSlides ? this._options.shownSlides : 1;
 		this._options.swipeable = typeof this._options.swipeable !== "undefined" ? this._options.swipeable : true;
 		this._options.infinite = typeof this._options.infinite !== "undefined" ? this._options.infinite : false;
@@ -28,7 +27,9 @@ export default class SimpleCarousel{
 
 	_addSliderOuter(){
 		let outer = document.createElement('div');
-		outer.classList.add('slider_outer', ...this._options.outerClasses);
+		if(typeof this._options.outerClasses !== "undefined"){
+			outer.classList.add('slider_outer', ...this._options.outerClasses);
+		}
 		this._slider.parentNode.insertBefore(outer, this._slider);
 		outer.append(this._slider);
 	}
