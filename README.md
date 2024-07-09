@@ -38,6 +38,8 @@ new SimpleCarousel(slider, options).start();
 
 `infinite` *(optional: default - false)* - whether slider is infinite
 
+`speed` *(optional: default - 15)* - swipe speed
+
 `markers` *(optional)* - markers DOM element
 
 ### Example
@@ -69,6 +71,7 @@ new SimpleCarousel(document.getElementById('slider'), {
 	arrowRight: document.getElementById('right'),
 	swipeable: true,
 	infinite: true,
+	speed: 15,
 	markers: document.querySelector('.markers'),
 }).start();
 ```

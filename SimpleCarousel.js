@@ -8,6 +8,7 @@ export default class SimpleCarousel{
 		this._options.shownSlides = this._options.shownSlides ? this._options.shownSlides : 1;
 		this._options.swipeable = typeof this._options.swipeable !== "undefined" ? this._options.swipeable : true;
 		this._options.infinite = typeof this._options.infinite !== "undefined" ? this._options.infinite : false;
+		this._options.speed = typeof this._options.speed !== "undefined" ? this._options.speed : 15;
 		this._currentSlide = 0;
 		this._slidesNumber = this._slider.children.length;
 		this._slideWidth = 100/this._options.shownSlides;
@@ -36,11 +37,33 @@ export default class SimpleCarousel{
 		return this._slider.children[Math.abs(this._currentSlide)].dataset.index;
 	}
 
+	_getTranslateX(){
+		let style = window.getComputedStyle(this._slider);
+		let matrix = new WebKitCSSMatrix(style.transform);
+		return matrix.m41;
+	}
+
+	_animateTransform(end){
+ 		let progress = this._getTranslateX();
+		let change = end > progress ? this._options.speed : -this._options.speed;
+
+		let loop = () => {
+			if(change > 0){
+				progress += Math.min(change, end - progress);
+			}else{
+				progress += Math.max(change, end - progress);
+			}
+			this._slider.style.transform = `translateX(${progress}px)`;
+			if(progress != end) window.requestAnimationFrame(loop);
+		}
+		window.requestAnimationFrame(loop);
+	}
+
 	_changeSlide(direction){
 		if(direction == 'right'){
 			//next slide does not exist and ifinite slider
 			if(-this._currentSlide == this._slidesNumber - this._options.shownSlides && this._options.infinite){
-				this._slider.classList.remove('slider_transforming');
+				//this._slider.classList.remove('slider_transforming');
 				this._slider.append(this._slider.firstElementChild.cloneNode(true));
 				this._slider.removeChild(this._slider.firstElementChild);
 
@@ -51,7 +74,7 @@ export default class SimpleCarousel{
 			}
 		}else if(direction == 'left'){
 			if(!this._currentSlide && this._options.infinite){ //previous slide does not exist and ifinite slider
-				this._slider.classList.remove('slider_transforming');
+				//this._slider.classList.remove('slider_transforming');
 				this._slider.prepend(this._slider.lastElementChild.cloneNode(true));
 				this._slider.removeChild(this._slider.lastElementChild);
 					
@@ -61,14 +84,13 @@ export default class SimpleCarousel{
 				this._currentSlide++;
 			}
 		}
-		
 		setTimeout(() => {
-			if(!this._slider.classList.contains('slider_transforming')){
+			/*if(!this._slider.classList.contains('slider_transforming')){
 				this._slider.classList.add('slider_transforming');
-			}
-			this._slider.style.transform = `translateX(${this._currentSlide * this._slideWidth}%)`; //move to the next slide
+			}*/
+			let end = (this._currentSlide * this._slideWidth) * window.innerWidth / 100;
+			this._animateTransform(end); //move to the next slide
 		});
-
 		//change active marker
 		if(this._options.markers){
 			this._options.markers.querySelector('.active_marker').classList.remove('active_marker');
@@ -79,26 +101,28 @@ export default class SimpleCarousel{
 
 	_handleSwipe(){
 		let downX, downY
-		this._slider.addEventListener('mousedown', (e) => {	
-			downX = e.clientX;
-			downY = e.clientY;
+		this._slider.addEventListener('touchstart', (e) => {	
+			downX = e.touches[0].clientX;
+			downY = e.touches[0].clientY;
 
-			//set mousedown coordinates
+			//set touchstart coordinates
 		});
 
-		this._slider.addEventListener('mouseup', (e) => {
+		this._slider.addEventListener('touchend', (e) => {
 			let slideWidthInPixels = window.innerWidth * this._slideWidth/100;
+			let upX = e.changedTouches[0].clientX;
+			let upY = e.changedTouches[0].clientY;
 
 			//handling only horizontal swipe
-			if(Math.abs(downY - e.clientY) < Math.abs(downX - e.clientX)){
+			if(Math.abs(downY - upY) < Math.abs(downX - upX)){
 
 				//swiped to the left
-				if(downX - e.clientX >= slideWidthInPixels * 0.15){
+				if(downX - upX >= slideWidthInPixels * 0.15){
 					this._changeSlide('right');
 				}
 
 				//swiped to the right
-				else if(downX - e.clientX <= -slideWidthInPixels * 0.15){
+				else if(downX - upX <= -slideWidthInPixels * 0.15){
 					this._changeSlide('left');
 				}
 			}
