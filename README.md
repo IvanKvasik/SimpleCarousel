@@ -74,7 +74,7 @@ new SimpleCarousel(document.getElementById('slider'), {
 	arrowRight: document.getElementById('right'),
 	swipeable: true,
 	infinite: true,
-	speed: 15,
+	speed: 1.5,
 	markers: document.querySelector('.markers'),
 }).start();
 ```
