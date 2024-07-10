@@ -12,6 +12,7 @@ export default class SimpleCarousel{
 		this._currentSlide = 0;
 		this._slidesNumber = this._slider.children.length;
 		this._slideWidth = 100/this._options.shownSlides;
+		this._slider.firstElementChild.classList.add('current_slide');
 
 		Array.from(this._slider.children).forEach((slide, ind) => {
 			slide.style.minWidth = `${this._slideWidth}%`;
@@ -60,6 +61,7 @@ export default class SimpleCarousel{
 	}
 
 	_changeSlide(direction){
+		this._slider.children[-this._currentSlide].classList.remove('current_slide');
 		if(direction == 'right'){
 			//next slide does not exist and ifinite slider
 			if(-this._currentSlide == this._slidesNumber - this._options.shownSlides && this._options.infinite){
@@ -83,6 +85,7 @@ export default class SimpleCarousel{
 			}
 		}
 		setTimeout(() => {
+			this._slider.children[-this._currentSlide].classList.add('current_slide');
 			this._animateTransform(this._currentSlide * this._slideWidth); //move to the next slide
 		});
 		//change active marker
