@@ -45,7 +45,7 @@ export default class SimpleCarousel{
 	}
 
 	_animateTransform(end){
- 		let progress = this._getTranslateX() * 100 / window.innerWidth;
+ 		let progress = this._getTranslateX() * 100 / this._slider.parentNode.clientWidth;
 		let change = end > progress ? this._options.speed : -this._options.speed;
 
 		let loop = () => {
