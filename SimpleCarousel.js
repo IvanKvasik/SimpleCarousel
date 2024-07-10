@@ -4,10 +4,11 @@ export default class SimpleCarousel{
 		this._slider = slider;
 		this._slider.classList.add('slider');
 		this._options = options;
-		this._options.shownSlides = this._options.shownSlides ? this._options.shownSlides : 1;
-		this._options.swipeable = typeof this._options.swipeable !== "undefined" ? this._options.swipeable : true;
-		this._options.infinite = typeof this._options.infinite !== "undefined" ? this._options.infinite : false;
-		this._options.speed = typeof this._options.speed !== "undefined" ? this._options.speed : 1.5;
+		if(typeof this._options.outerClasses === "undefined") this._options.outerClasses = [];
+		if(typeof this._options.shownSlides === "undefined") this._options.shownSlide = 1;
+		if(typeof this._options.swipeable === "undefined") this._options.swipeable = true;
+		if(typeof this._options.infinite === "undefined") this._options.infinite = true;
+		if(typeof this._options.speed === "undefined") this._options.speed = 1.5;
 		this._currentSlide = 0;
 		this._slidesNumber = this._slider.children.length;
 		this._slideWidth = 100/this._options.shownSlides;
@@ -27,9 +28,7 @@ export default class SimpleCarousel{
 
 	_addSliderOuter(){
 		let outer = document.createElement('div');
-		if(typeof this._options.outerClasses !== "undefined"){
-			outer.classList.add('slider_outer', ...this._options.outerClasses);
-		}
+		outer.classList.add('slider_outer', ...this._options.outerClasses);
 		this._slider.parentNode.insertBefore(outer, this._slider);
 		outer.append(this._slider);
 	}
@@ -45,7 +44,7 @@ export default class SimpleCarousel{
 	}
 
 	_animateTransform(end){
- 		let progress = this._getTranslateX() * 100 / this._slider.parentNode.clientWidth;
+ 		let progress = this._getTranslateX() * 100 / window.innerWidth;
 		let change = end > progress ? this._options.speed : -this._options.speed;
 
 		let loop = () => {
@@ -83,9 +82,9 @@ export default class SimpleCarousel{
 				this._currentSlide++;
 			}
 		}
-		//setTimeout(() => {
+		setTimeout(() => {
 			this._animateTransform(this._currentSlide * this._slideWidth); //move to the next slide
-		//});
+		});
 		//change active marker
 		if(this._options.markers){
 			this._options.markers.querySelector('.active_marker').classList.remove('active_marker');
