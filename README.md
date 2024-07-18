@@ -26,7 +26,7 @@ new SimpleCarousel(slider, options).start();
 
 `.start()` *(required for working)* - starts controls listening
 
-`shownSlides` - shownSlides setter after object definition
+`shownSlides` - shownSlides option's setter
 
 #### Options
 
