@@ -26,6 +26,8 @@ new SimpleCarousel(slider, options).start();
 
 `.start()` *(required for working)* - starts controls listening
 
+`shownSlides` - shownSlides setter after object definition
+
 #### Options
 
 `outerClasses` *(optional)* - array of additional classes for outer block
