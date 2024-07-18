@@ -11,13 +11,9 @@ export default class SimpleCarousel{
 		if(typeof this._options.speed === "undefined") this._options.speed = 1.5;
 		this._currentSlide = 0;
 		this._slidesNumber = this._slider.children.length;
-		this._slideWidth = 100/this._options.shownSlides;
 		this._slider.firstElementChild.classList.add('current_slide');
 
-		Array.from(this._slider.children).forEach((slide, ind) => {
-			slide.style.minWidth = `${this._slideWidth}%`;
-			slide.dataset.index = ind;
-		});
+		this._setSlideWidth();
 
 		this._addSliderOuter();
 
@@ -25,6 +21,13 @@ export default class SimpleCarousel{
 			this._options.markers.classList.add('slider_markers');
 			this._renderMarkers();
 		}
+	}
+
+	_setSlideWidth(){
+		Array.from(this._slider.children).forEach((slide, ind) => {
+			slide.style.minWidth = `${this._slideWidth}%`;
+			slide.dataset.index = ind;
+		});
 	}
 
 	_addSliderOuter(){
@@ -38,14 +41,35 @@ export default class SimpleCarousel{
 		return this._slider.children[Math.abs(this._currentSlide)].dataset.index;
 	}
 
+	get _sliderWidth(){
+		return this._slider.parentNode.clientWidth;
+	}
+
+	get _gap(){
+		return parseInt(getComputedStyle(this._slider).gap) * 100 / this._sliderWidth;
+	}
+
+	get _scrollWidth(){
+		return this._slideWidth + this._gap;
+	}
+
+	get _slideWidth(){
+		return 100/this._options.shownSlides;
+	}
+
+	set shownSlides(value){
+		this._options.shownSlides = value;
+		this._setSlideWidth();
+	}
+
 	_getTranslateX(){
-		let style = window.getComputedStyle(this._slider);
+		let style = getComputedStyle(this._slider);
 		let matrix = new WebKitCSSMatrix(style.transform);
 		return matrix.m41;
 	}
 
 	_animateTransform(end){
- 		let progress = this._getTranslateX() * 100 / this._slider.parentNode.clientWidth;
+ 		let progress = this._getTranslateX() * 100 / this._sliderWidth
 		let change = end > progress ? this._options.speed : -this._options.speed;
 
 		let loop = () => {
@@ -55,9 +79,9 @@ export default class SimpleCarousel{
 				progress += Math.max(change, end - progress);
 			}
 			this._slider.style.transform = `translateX(${progress}%)`;
-			if(progress != end) window.requestAnimationFrame(loop);
+			if(progress != end) requestAnimationFrame(loop);
 		}
-		window.requestAnimationFrame(loop);
+		requestAnimationFrame(loop);
 	}
 
 	_changeSlide(direction){
@@ -69,7 +93,7 @@ export default class SimpleCarousel{
 				this._slider.removeChild(this._slider.firstElementChild);
 
 				//translate current slide in the visible zone
-				this._slider.style.transform = `translateX(${(this._currentSlide+1)*this._slideWidth}%)`;
+				this._slider.style.transform = `translateX(${(this._currentSlide+1)*this._scrollWidth}%)`;
 			}else if(-this._currentSlide != this._slidesNumber - this._options.shownSlides){ //next slide exists
 				this._currentSlide--;
 			}
@@ -79,14 +103,15 @@ export default class SimpleCarousel{
 				this._slider.removeChild(this._slider.lastElementChild);
 					
 				//translate current slide in the visible zone
-				this._slider.style.transform = `translateX(${(this._currentSlide-1)*this._slideWidth}%)`;
+				this._slider.style.transform = `translateX(${(this._currentSlide-1)*this._scrollWidth}%)`;
 			}else if(this._currentSlide){ //previous slide exists
 				this._currentSlide++;
 			}
 		}
 		setTimeout(() => {
 			this._slider.children[-this._currentSlide].classList.add('current_slide');
-			this._animateTransform(this._currentSlide * this._slideWidth); //move to the next slide
+			let end = this._currentSlide * this._scrollWidth;
+			this._animateTransform(end); //move to the next slide
 		});
 		//change active marker
 		if(this._options.markers){
@@ -106,7 +131,7 @@ export default class SimpleCarousel{
 		});
 
 		this._slider.addEventListener('touchend', (e) => {
-			let slideWidthInPixels = window.innerWidth * this._slideWidth/100;
+			let slideWidthInPixels = this._sliderWidth * this._scrollWidth/100;
 			let upX = e.changedTouches[0].clientX;
 			let upY = e.changedTouches[0].clientY;
 
