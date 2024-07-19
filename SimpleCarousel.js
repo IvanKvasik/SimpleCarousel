@@ -116,7 +116,7 @@ export default class SimpleCarousel{
 		//change active marker
 		if(this._options.markers){
 			this._options.markers.querySelector('.active_marker').classList.remove('active_marker');
-			let newActiveMarker = Math.floor(this._slide / this._options.shownSlides);
+			let newActiveMarker = this._slide;
 			this._options.markers.children[newActiveMarker].classList.add('active_marker');
 		}
 	}
@@ -153,7 +153,7 @@ export default class SimpleCarousel{
 
 	_renderMarkers(){
 		//one marker for every shown slides group
-		for(let i = 0;i < this._slidesNumber / this._options.shownSlides;i++){
+		for(let i = 0;i < this._slidesNumber;i++){
 			let newMarker = document.createElement('div');
 			newMarker.classList.add('marker');
 			if(!i) newMarker.classList.add('active_marker');
@@ -167,7 +167,7 @@ export default class SimpleCarousel{
 		markers.forEach(marker => {
 			marker.addEventListener('click', () => {
 				let activeMarker = this._options.markers.querySelector('.active_marker');
-				let slidesToChange = marker.dataset.index * this._options.shownSlides - this._slide;
+				let slidesToChange = marker.dataset.index - this._slide;
 				let changeDirection = marker.dataset.index > activeMarker.dataset.index ? 'right' : 'left';
 				if(!marker.classList.contains('active_marker')){
 					for(let i = 0;i < Math.abs(slidesToChange);i++){
