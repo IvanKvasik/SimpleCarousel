@@ -11,16 +11,28 @@ export default class SimpleCarousel{
 		if(typeof this._options.speed === "undefined") this._options.speed = 1.5;
 		this._currentSlide = 0;
 		this._slidesNumber = this._slider.children.length;
-		this._slider.firstElementChild.classList.add('current_slide');
 
 		this._setSlideWidth();
-
-		this._addSliderOuter();
 
 		if(this._options.markers){
 			this._options.markers.classList.add('slider_markers');
 			this._renderMarkers();
 		}
+
+		if(this._slidesNumber <= this._options.shownSlides){
+			this._addSlides();
+		}
+		this._slider.firstElementChild.classList.add('current_slide');
+
+		this._addSliderOuter();
+	}
+
+	_addSlides(){
+		let added_packs = Math.floor((this._options.shownSlides - this._slidesNumber)/this._slidesNumber)+1;
+		for(let sl = 0;sl < added_packs*this._slidesNumber;sl++){
+			this._slider.append(this._slider.children[sl].cloneNode(true));
+		}
+		this._slidesNumber += added_packs*this._slidesNumber;
 	}
 
 	_setSlideWidth(){
@@ -46,7 +58,9 @@ export default class SimpleCarousel{
 	}
 
 	get _gap(){
-		return parseInt(getComputedStyle(this._slider).gap) * 100 / this._sliderWidth;
+		let gap = parseInt(getComputedStyle(this._slider).gap) * 100 / this._sliderWidth;
+		if(isNaN(gap)) gap = 0;
+		return gap;
 	}
 
 	get _scrollWidth(){
