@@ -13,17 +13,4 @@
 	-webkit-box-pack: center;
 	    -ms-flex-pack: center;
 	        justify-content: center;
-	gap: 10px;
-}
-.marker{
-	-webkit-box-sizing: border-box;
-	        box-sizing: border-box;
-	width: 12px;
-	height: 12px;
-	border-radius: 50%;
-	border: 1px solid blue;
-	cursor: pointer;
-}
-.active_marker{
-	background-color: blue;
 }

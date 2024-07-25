@@ -75,7 +75,7 @@ export default class SimpleCarousel{
 	}
 
 	get _slideWidth(){
-		return 100/this._options.shownSlides;
+		return (100 - (this._options.shownSlides-1) * this._gap)/this._options.shownSlides;
 	}
 
 	set shownSlides(value){
