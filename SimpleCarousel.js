@@ -13,6 +13,7 @@ export default class SimpleCarousel{
 		this._slidesNumber = this._slider.children.length;
 
 		this._setSlideWidth();
+		this._setIndexes();
 
 		if(this._options.markers){
 			this._options.markers.classList.add('slider_markers');
@@ -31,14 +32,20 @@ export default class SimpleCarousel{
 		let added_packs = Math.floor((this._options.shownSlides - this._slidesNumber)/this._slidesNumber)+1;
 		for(let sl = 0;sl < added_packs*this._slidesNumber;sl++){
 			this._slider.append(this._slider.children[sl].cloneNode(true));
+
 		}
 		this._slidesNumber += added_packs*this._slidesNumber;
+	}
+
+	_setIndexes(){
+		Array.from(this._slider.children).forEach((slide, ind) => {
+			slide.dataset.index = ind;
+		});
 	}
 
 	_setSlideWidth(){
 		Array.from(this._slider.children).forEach((slide, ind) => {
 			slide.style.minWidth = `${this._slideWidth}%`;
-			slide.dataset.index = ind;
 		});
 	}
 
@@ -131,6 +138,7 @@ export default class SimpleCarousel{
 		if(this._options.markers){
 			this._options.markers.querySelector('.active_marker').classList.remove('active_marker');
 			let newActiveMarker = this._slide;
+			console.log(newActiveMarker);
 			this._options.markers.children[newActiveMarker].classList.add('active_marker');
 		}
 	}
