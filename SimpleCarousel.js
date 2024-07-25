@@ -138,7 +138,6 @@ export default class SimpleCarousel{
 		if(this._options.markers){
 			this._options.markers.querySelector('.active_marker').classList.remove('active_marker');
 			let newActiveMarker = this._slide;
-			console.log(newActiveMarker);
 			this._options.markers.children[newActiveMarker].classList.add('active_marker');
 		}
 	}
