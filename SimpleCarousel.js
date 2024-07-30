@@ -173,7 +173,7 @@ export default class SimpleCarousel{
 	}
 
 	_renderMarkers(){
-		//one marker for every shown slides group
+		//one marker for every slide
 		for(let i = 0;i < this._slidesNumber;i++){
 			let newMarker = document.createElement('div');
 			newMarker.classList.add('marker');
