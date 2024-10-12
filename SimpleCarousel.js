@@ -71,7 +71,7 @@ export default class SimpleCarousel{
 	}
 
 	get _scrollWidth(){
-		return this._slideWidth + this._gap/2;
+		return this._slideWidth + this._gap;
 	}
 
 	get _slideWidth(){
