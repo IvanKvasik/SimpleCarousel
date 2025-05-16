@@ -5,7 +5,7 @@ export default class SimpleCarousel{
 		this._slider.classList.add('slider');
 		this._options = options;
 		if(typeof this._options.outerClasses === "undefined") this._options.outerClasses = [];
-		if(typeof this._options.shownSlides === "undefined") this._options.shownSlide = 1;
+		if(typeof this._options.shownSlides === "undefined") this._options.shownSlides = 1;
 		if(typeof this._options.swipeable === "undefined") this._options.swipeable = true;
 		if(typeof this._options.infinite === "undefined") this._options.infinite = true;
 		if(typeof this._options.speed === "undefined") this._options.speed = 1.5;
